@@ -1,5 +1,6 @@
 from wpilib import TimedRobot, run, SpeedControllerGroup, Encoder
 from wpilib.drive import DifferentialDrive
+from networktables import NetworkTables
 from ctre import WPI_TalonFX
 
 
@@ -23,7 +24,9 @@ class Robot(TimedRobot):
         self.drive = DifferentialDrive(self.leftDriveMotors,
                                        self.rightDriveMotors)
 
-        self.testEncoder = Encoder(1, 2)
+        self.testEncoder = Encoder(1, 2, 3)
+
+        self.dashboard = NetworkTables.getTable("SmartDashboard")
 
     def disabledInit(self):
         pass
@@ -38,8 +41,7 @@ class Robot(TimedRobot):
         pass
 
     def robotPeriodic(self):
-        # print(self.testEncoder.get())
-        pass
+        self.dashboard.putNumber("Encoder", self.testEncoder.getRate())
 
     def disabledPeriodic(self):
         pass
