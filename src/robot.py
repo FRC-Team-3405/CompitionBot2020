@@ -3,6 +3,8 @@ from networktables import NetworkTables
 
 from components.driveMotor import DriveMotor
 from components.driveMotorGroup import DriveMotorGroup
+from components.solenoid import Solenoid
+
 
 
 class Robot(TimedRobot):
@@ -17,9 +19,13 @@ class Robot(TimedRobot):
         self.left3 = DriveMotor(6, False)
         self.left = DriveMotorGroup([self.left1, self.left2, self.left3])
 
+        self.testSolenoid = Solenoid(0, 1)
+
         self.testEncoder = Encoder(1, 2, 3, Encoder.EncodingType.k4X)
 
         self.dashboard = NetworkTables.getTable("SmartDashboard")
+
+        self.dashboard.putBoolean("Activate", False)
 
     def disabledInit(self):
         pass
@@ -43,6 +49,8 @@ class Robot(TimedRobot):
         speed = self.testEncoder.get() / 2048 / 5
         self.left.set(speed)
         self.right.set(speed)
+
+        self.testSolenoid.setValue(self.dashboard.getBoolean("Activate", False))
 
     def teleopPeriodic(self):
         pass
