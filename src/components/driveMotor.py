@@ -14,7 +14,7 @@ class DriveMotor:
         self.motor.set(TalonFXControlMode.PercentOutput, value)
 
     def getPostion(self) -> float:
-        return self.sensor.getQuadraturePostion()
+        return self.sensor.getQuadraturePosition()
 
     def getVelocity(self) -> float:
-        return self.sensor.getQuadratureVeloctiy()
+        return self.sensor.getQuadratureVelocity()
