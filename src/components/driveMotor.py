@@ -1,11 +1,11 @@
-from ctre import (TalonFX,
+from ctre import (WPI_TalonFX,
                   SensorCollection,
                   TalonFXControlMode)
 
 
 class DriveMotor:
     def __init__(self, _id: int, _invert: bool):
-        self.motor = TalonFX(_id)
+        self.motor = WPI_TalonFX(_id)
         self.motor.setInverted(_invert)
         self.motor.setSensorPhase(_invert)
         self.sensor = SensorCollection(self.motor)

@@ -4,7 +4,14 @@ from networktables import NetworkTables
 from components.driveMotor import DriveMotor
 from components.driveMotorGroup import DriveMotorGroup
 from components.solenoid import Solenoid
+from components.pressureSensor import PressureSensor
 
+"""
+for (path, dirs, files) in walk("src/components"):
+    for name in files:
+        if name.endswith(".py"):
+            exec("from {}.{} import {}".format(path[4:].replace("/", "."), name[:-3], name[0].capitalize() + name[1:-3]))
+"""
 
 
 class Robot(TimedRobot):
@@ -20,6 +27,7 @@ class Robot(TimedRobot):
         self.left = DriveMotorGroup([self.left1, self.left2, self.left3])
 
         self.testSolenoid = Solenoid(0, 1)
+        self.testPressure = PressureSensor(0)
 
         self.testEncoder = Encoder(1, 2, 3, Encoder.EncodingType.k4X)
 
@@ -41,6 +49,7 @@ class Robot(TimedRobot):
 
     def robotPeriodic(self):
         self.dashboard.putNumber("Velocity", self.right1.getVelocity()/2048*60)
+        self.dashboard.putString("Pressure", "{} PSI".format(int(self.testPressure.read())))
 
     def disabledPeriodic(self):
         pass
