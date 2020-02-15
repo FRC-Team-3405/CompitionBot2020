@@ -3,15 +3,11 @@ from networktables import NetworkTables
 
 from components.driveMotor import DriveMotor
 from components.driveMotorGroup import DriveMotorGroup
+from components.driveBase import DriveBase
 from components.solenoid import Solenoid
 from components.pressureSensor import PressureSensor
-
-"""
-for (path, dirs, files) in walk("src/components"):
-    for name in files:
-        if name.endswith(".py"):
-            exec("from {}.{} import {}".format(path[4:].replace("/", "."), name[:-3], name[0].capitalize() + name[1:-3]))
-"""
+from components.xbox import Xbox
+from components.shifter import Shifter
 
 
 class Robot(TimedRobot):
@@ -26,8 +22,11 @@ class Robot(TimedRobot):
         self.left3 = DriveMotor(6, False)
         self.left = DriveMotorGroup([self.left1, self.left2, self.left3])
 
-        self.testSolenoid = Solenoid(0, 1)
+        #self.testSolenoid = Solenoid(0, 1)
         self.testPressure = PressureSensor(0)
+        self.xbox = Xbox(0)
+        self.testShifter = Shifter(0, 1, self.xbox)
+        
 
         self.testEncoder = Encoder(1, 2, 3, Encoder.EncodingType.k4X)
 
@@ -48,21 +47,27 @@ class Robot(TimedRobot):
         pass
 
     def robotPeriodic(self):
-        self.dashboard.putNumber("Velocity", self.right1.getVelocity()/2048*60)
+        # self.dashboard.putNumber("Velocity", self.right1.getVelocity()/2048*60)
         self.dashboard.putString("Pressure", "{} PSI".format(int(self.testPressure.read())))
+
+        if self.xbox.getShifter():
+            print("Should Shift")
 
     def disabledPeriodic(self):
         pass
 
     def autonomousPeriodic(self):
-        speed = self.testEncoder.get() / 2048 / 5
-        self.left.set(speed)
-        self.right.set(speed)
+        #speed = self.testEncoder.get() / 2048 / 5
+        #self.left.set(speed)
+        #self.right.set(speed)
 
-        self.testSolenoid.setValue(self.dashboard.getBoolean("Activate", False))
+        # self.testSolenoid.set(self.dashboard.getBoolean("Activate", False))
+        if self.xbox.getShifter():
+            print("Should Shift")
+        #self.testShifter.update()
 
     def teleopPeriodic(self):
-        pass
+        self.testShifter.update()
 
     def testPeriodic(self):
         pass
