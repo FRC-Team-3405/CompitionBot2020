@@ -17,19 +17,23 @@ class Robot(TimedRobot):
     def robotInit(self):
         self.xbox = Xbox(0)
 
-        self.right1 = DriveMotor(1, False)
-        self.right2 = DriveMotor(2, False)
+        self.right1 = DriveMotor(1, True)
+        self.right2 = DriveMotor(2, True)
         self.right = DriveMotorGroup([self.right1, self.right2])
 
-        self.left1 = DriveMotor(3, True)
-        self.left2 = DriveMotor(4, True)
+        self.left1 = DriveMotor(3, False)
+        self.left2 = DriveMotor(4, False)
         self.left = DriveMotorGroup([self.left1, self.left2])
 
         self.drive = DriveBase(self.right, self.left)
-        self.music = Music([self.right1,
-                            self.right2,
-                            self.left1,
-                            self.left2])
+        self.driveMotors = [self.right1, self.right2, self.left1, self.left2]
+        
+        # Most important Part
+        self.victoryMusic = Music(self.driveMotors, "victory")
+        self.wiiMusic = Music(self.driveMotors, "wii")
+        self.zeldaMusic1 = Music(self.driveMotors, "zelda1")
+        self.zeldaMusic2 = Music(self.driveMotors, "zelda2")
+        self.zeldaMusic3 = Music(self.driveMotors, "zelda3")
         
         self.pickup1 = PickupMotor(5, False)
         self.pickup2 = PickupMotor(6, False)
@@ -42,7 +46,7 @@ class Robot(TimedRobot):
         pass
 
     def autonomousInit(self):
-        self.music.victory()
+        self.zeldaMusic3.start()
 
     def teleopInit(self):
         pass
@@ -62,7 +66,7 @@ class Robot(TimedRobot):
     def teleopPeriodic(self):
         self.testShifter.update()
         self.pickup.update()
-        self.drive.tankDrive(self.xbox.getRightY(), self.xbox.getLeftY())
+        self.drive.tankDrive(self.xbox.getRightY()/4, self.xbox.getLeftY()/4)
 
     def testPeriodic(self):
         pass
