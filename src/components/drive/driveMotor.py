@@ -1,6 +1,7 @@
 from ctre import (WPI_TalonFX,
                   SensorCollection,
-                  TalonFXControlMode)
+                  TalonFXControlMode,
+                  NeutralMode)
 
 
 class DriveMotor:
@@ -8,6 +9,7 @@ class DriveMotor:
         self.motor = WPI_TalonFX(_id)
         self.motor.setInverted(_invert)
         self.motor.setSensorPhase(_invert)
+        self.motor.setNeutralMode(NeutralMode.Brake)
         self.sensor = SensorCollection(self.motor)
 
     def set(self, value: float):

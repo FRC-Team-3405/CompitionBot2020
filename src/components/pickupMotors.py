@@ -1,21 +1,21 @@
 from .pickupMotor import PickupMotor
-from .xbox import Xbox
+from .driver import driver
 from typing import List
 
 
 class PickupMotors():
     def __init__(self, _motors: List[PickupMotor],
-                 _xbox: Xbox, _maxOutput: int):
+                 _driver: driver, _maxOutput: int):
 
         self.motors = _motors
-        self.xbox = _xbox
+        self.driver = _driver
         self.maxOutput = _maxOutput
 
     def update(self):
-        if self.xbox.getPickupForward():
+        if self.driver.getPickupForward():
             for i in self.motors:
                 i.set(self.maxOutput)
-        elif self.xbox.getPickupBackward():
+        elif self.driver.getPickupBackward():
             for i in self.motors:
                 i.set(-self.maxOutput)
         else:

@@ -1,17 +1,17 @@
 from components.solenoid import Solenoid
-from components.xbox import Xbox
+from components.controlers.driverControl import DriverControl
 
 
 class Shifter():
-    def __init__(self, lowId, highId, xbox: Xbox):
+    def __init__(self, lowId, highId, driver: DriverControl):
         self.solenoid = Solenoid(lowId, highId)
-        self.xbox = xbox
+        self.driver = driver
         self.high = False
 
     def update(self):
-        if self.xbox.getShiftUp():
+        if self.driver.getShiftUp():
             self.high = True
-        elif self.xbox.getShiftDown():
+        elif self.driver.getShiftDown():
             self.high = False
         
         self.solenoid.set(self.high)
