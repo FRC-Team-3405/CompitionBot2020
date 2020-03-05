@@ -15,3 +15,10 @@ Intake Motors: 8, 9
 ## Pnematic Setup
 Shifter: 0, 1  
 Intake: 2, 3
+
+## Controlers
+Driver: Airflow  
+Id: 0
+***
+Operator: New Xbox  
+Id: 1
