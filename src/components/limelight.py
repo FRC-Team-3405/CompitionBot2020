@@ -15,6 +15,3 @@ class Limelight():
             if (self.table.getNumber("tv", 0) == 1):
                 offset = self.table.getNumber("tx")
                 self.drive.setRaw(offset*self.kp, -offset*self.kp)
-
-            else:
-                self.driver.setRumbleTime(1)

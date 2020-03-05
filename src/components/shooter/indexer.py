@@ -2,8 +2,6 @@ from wpilib import DigitalInput, Encoder
 from networktables import NetworkTables
 from ctre import WPI_VictorSPX, ControlMode
 from ..controlers.operatorControl import OperatorControl
-# For Testing
-from random import randrange
 
 
 class Indexer():
@@ -25,13 +23,12 @@ class Indexer():
         self.minspeed = .1
         self.speedmult = 1/300
         self.speed = .1
-    
+
     def update(self):
         self.realValue = self.encoder.get()
-        self.dashboard.putString("Indexer", "{} degrees".format(self.getRotation()))
-        
+
         offset = (self.targetValue - self.realValue) % self.totalValues - (self.totalValues / 2)
-        
+
         self.speed = clamp(abs(offset) * self.speedmult, self.minspeed, self.maxspeed)
         self.dashboard.putString("Indexer", "{} offset".format(offset))
 
@@ -41,7 +38,7 @@ class Indexer():
             self.motor.set(ControlMode.PercentOutput, self.speed)
         else:
             self.motor.set(ControlMode.PercentOutput, 0)
-        
+
         if (abs(offset) < 15):
             if (self.operator.getIndexUp()):
                 self.hole = (self.hole + 1) % 5
@@ -51,7 +48,7 @@ class Indexer():
 
     def getRotation(self) -> float:
         return self.realValue / self.totalValues * 360
-    
+
     def setRotation(self, degrees):
         self.targetValue = clamp(degrees/360*self.totalValues,
                                  0, self.totalValues)
