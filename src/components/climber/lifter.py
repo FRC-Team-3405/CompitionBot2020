@@ -12,7 +12,5 @@ class Lifter():
         power = 0
         if (self.operator.getLifterUp()):
             power += self.speed
-        if (self.operator.getLifterDown()):
-            power -= self.speed
 
         self.motor.set(TalonFXControlMode.PercentOutput, power)

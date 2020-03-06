@@ -8,7 +8,8 @@ class DriverControl(GenericHID):
                           "ShiftDown": 6,
                           "SpeedUp": 7,
                           "SpeedDown": 8,
-                          "Aim": 1}
+                          "FullForward": 4,
+                          "FullBackward": 1}
         self.AxisMap = {"RightY": 2,
                         "RightX": 3,
                         "LeftY": 1,
@@ -38,13 +39,16 @@ class DriverControl(GenericHID):
         return self.getRawButton(self.ButtonMap["ShiftDown"])
 
     def getSpeedUp(self) -> bool:
-        return self.getRawButton(self.ButtonMap["SpeedUp"])
+        return self.getRawButtonPressed(self.ButtonMap["SpeedUp"])
 
     def getSpeedDown(self) -> bool:
         return self.getRawButton(self.ButtonMap["SpeedDown"])
 
-    def getAim(self) -> bool:
-        return self.getRawButton(self.ButtonMap["Aim"])
+    def getFullForward(self) -> bool:
+        return self.getRawButton(self.ButtonMap["FullForward"])
+    
+    def getFullBackward(self) -> bool:
+        return self.getRawButton(self.ButtonMap["FullBackward"])
 
     def rumble(self, _bool):
         if (_bool):

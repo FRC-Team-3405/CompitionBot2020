@@ -6,7 +6,7 @@ class Arm():
     def __init__(self, operator: OperatorControl):
         self.operator = operator
         self.motor = WPI_TalonSRX(10)
-        self.speed = .5
+        self.speed = 1
 
     def update(self):
         power = 0
