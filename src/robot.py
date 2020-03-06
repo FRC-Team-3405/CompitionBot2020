@@ -9,6 +9,8 @@ from components.controlers.operatorControl import OperatorControl
 from components.shifter import Shifter
 from components.limelight import Limelight
 from components.shooter.indexer import Indexer
+from components.climber.arm import Arm
+from components.climber.lifter import Lifter
 
 
 class Robot(TimedRobot):
@@ -31,9 +33,12 @@ class Robot(TimedRobot):
 
         self.shifter = Shifter(0, 1, self.driver)
 
-        self.limelight = Limelight(self.drive, self.driver)
+        #self.limelight = Limelight(self.drive, self.driver)
 
         self.indexer = Indexer(self.operator)
+
+        self.arm = Arm(self.operator)
+        self.lifter = Lifter(self.operator)
 
     def disabledInit(self):
         pass
@@ -60,7 +65,9 @@ class Robot(TimedRobot):
         self.indexer.update()
         self.shifter.update()
         self.drive.update()
-        self.limelight.update()
+        #self.limelight.update()
+        self.arm.update()
+        self.lifter.update()
 
     def testPeriodic(self):
         pass

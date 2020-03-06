@@ -11,6 +11,8 @@ Climb Motor: 6
 ### Victors
 Index Motor: 7  
 Intake Motors: 8, 9
+### Talons
+Arm Motor: 10
 
 ## Pnematic Setup
 Shifter: 0, 1  

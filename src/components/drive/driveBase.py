@@ -21,6 +21,8 @@ class DriveBase():
             self.speed = .66
         left = (self.driver.getLeftY() ** 3) * self.speed
         right = (self.driver.getRightY() ** 3) * self.speed
+        self.right.set(right)
+        self.left.set(left)
         
     def setRaw(self, right, left):
         self.right.set(right)
