@@ -38,10 +38,11 @@ class Robot(TimedRobot):
         self.lifter = Lifter(self.operator)
 
     def disabledInit(self):
-        self.autonomousTimer = Timer()
+        pass
 
     def autonomousInit(self):
-        pass
+        self.autonomousTimer = Timer()
+        self.autonomousTimer.start()
 
     def teleopInit(self):
         pass
@@ -56,10 +57,10 @@ class Robot(TimedRobot):
         pass
 
     def autonomousPeriodic(self):
-        if (Timer < .1):
-            self.drive.setRaw(1, 1)
+        if (self.autonomousTimer.get() < .5):
+            self.drive.setRaw(.5, .5)
         else:
-            self.dirve.setRaw(0, 0)
+            self.drive.setRaw(0, 0)
 
     def teleopPeriodic(self):
         self.indexer.update()
