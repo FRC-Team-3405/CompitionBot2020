@@ -1,4 +1,4 @@
-from wpilib import TimedRobot, run
+from wpilib import TimedRobot, run, Timer
 from networktables import NetworkTables
 
 from components.drive.driveMotor import DriveMotor
@@ -7,7 +7,6 @@ from components.drive.driveBase import DriveBase
 from components.controlers.driverControl import DriverControl
 from components.controlers.operatorControl import OperatorControl
 from components.shifter import Shifter
-from components.limelight import Limelight
 from components.shooter.indexer import Indexer
 from components.climber.arm import Arm
 from components.climber.lifter import Lifter
@@ -33,15 +32,13 @@ class Robot(TimedRobot):
 
         self.shifter = Shifter(0, 1, self.driver)
 
-        #self.limelight = Limelight(self.drive, self.driver)
-
         self.indexer = Indexer(self.operator)
 
         self.arm = Arm(self.operator)
         self.lifter = Lifter(self.operator)
 
     def disabledInit(self):
-        pass
+        self.autonomousTimer = Timer()
 
     def autonomousInit(self):
         pass
@@ -59,13 +56,15 @@ class Robot(TimedRobot):
         pass
 
     def autonomousPeriodic(self):
-        pass
+        if (Timer < .1):
+            self.drive.setRaw(1, 1)
+        else:
+            self.dirve.setRaw(0, 0)
 
     def teleopPeriodic(self):
         self.indexer.update()
         self.shifter.update()
         self.drive.update()
-        #self.limelight.update()
         self.arm.update()
         self.lifter.update()
 
