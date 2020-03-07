@@ -1,5 +1,5 @@
 from ..controlers.operatorControl import OperatorControl
-from intakeMotor import IntakeMotor
+from .intakeMotor import IntakeMotor
 from ..solenoid import Solenoid
 
 
@@ -17,13 +17,10 @@ class Intake():
             self.deployed = not self.deployed
 
         self.solenoid.set(self.deployed)
-
+        motorOut = 0
         if (self.deployed):
-            motorOut = 0
-            if (self.operator.getPickupIn()):
-                motorOut += self.speed
-            if (self.operator.getPickupOut()):
-                motorOut -= self.speed
+            motorOut += self.speed * self.operator.getPickupIn()
+            motorOut -= self.speed * self.operator.getPickupOut()
 
         self.motor1.set(motorOut)
         self.motor2.set(motorOut)

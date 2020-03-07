@@ -5,7 +5,7 @@ class OperatorControl(GenericHID):
     def __init__(self, id):
         super().__init__(id)
         self.ButtonMap = {"IndexDown": 5, "IndexUp": 6, "LifterDown": 1,
-                          "LifterUp": 4, "PickupOut": 7, "PickupIn": 8}
+                          "LifterUp": 4, "PickupOut": 2, "PickupIn": 5, "Deploy": 2}
         self.AxisMap = {}
 
     def getIndexDown(self) -> bool:
@@ -17,11 +17,11 @@ class OperatorControl(GenericHID):
     def getPickupDeploy(self) -> bool:
         return self.getRawButtonPressed(self.ButtonMap["Deploy"])
 
-    def getPickupIn(self) -> bool:
-        return self.getRawButton(self.ButtonMap["PickupIn"])
+    def getPickupIn(self) -> float:
+        return self.getRawAxis(self.ButtonMap["PickupIn"])
 
-    def getPickupOut(self) -> bool:
-        return self.getRawButton(self.ButtonMap["PickupOut"])
+    def getPickupOut(self) -> float:
+        return self.getRawAxis(self.ButtonMap["PickupOut"])
 
     def getLifterUp(self) -> bool:
         return self.getRawButton(self.ButtonMap["LifterUp"])

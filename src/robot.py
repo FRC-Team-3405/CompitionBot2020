@@ -10,6 +10,7 @@ from components.shifter import Shifter
 from components.shooter.indexer import Indexer
 from components.climber.arm import Arm
 from components.climber.lifter import Lifter
+from components.shooter.intake import Intake
 
 
 class Robot(TimedRobot):
@@ -36,6 +37,7 @@ class Robot(TimedRobot):
 
         self.arm = Arm(self.operator)
         self.lifter = Lifter(self.operator)
+        self.intake = Intake(self.operator)
 
     def disabledInit(self):
         pass
@@ -57,7 +59,7 @@ class Robot(TimedRobot):
         pass
 
     def autonomousPeriodic(self):
-        if (self.autonomousTimer.get() < .5):
+        if (self.autonomousTimer.get() < 2):
             self.drive.setRaw(.5, .5)
         else:
             self.drive.setRaw(0, 0)
@@ -68,6 +70,7 @@ class Robot(TimedRobot):
         self.drive.update()
         self.arm.update()
         self.lifter.update()
+        self.intake.update()
 
     def testPeriodic(self):
         pass

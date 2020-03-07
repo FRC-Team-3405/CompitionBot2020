@@ -13,26 +13,23 @@ class DriveBase():
         self.driver = driver
         self.limelight = Limelight(self, self.driver)
         self.speed = 1
-        self.highSpeedEnabled = False
         self.highSpeed = 1
         self.normalSpeed = .66
-        self.lowSpeed = .33
+        self.lowSpeed = .5
+        self.lowestSpeed = .20
 
     def update(self):
         if (self.limelight.update()):
             return
-
-        if (self.driver.getSpeedUp()):
-            self.highSpeedEnabled = not self.highSpeedEnabled
    
-        if (self.highSpeedEnabled and self.driver.getSpeedDown()):
+        if (self.driver.getSpeedUp() and self.driver.getSpeedDown()):
+            self.speed = self.lowestSpeed
+        elif (self.driver.getSpeedUp()):
             self.speed = self.normalSpeed
-        elif (self.highSpeedEnabled):
-            self.speed = self.highSpeed
         elif (self.driver.getSpeedDown()):
             self.speed = self.lowSpeed
         else:
-            self.speed = self.normalSpeed
+            self.speed = self.highSpeed
 
         left = (self.driver.getLeftY() ** 3) * self.speed
         right = (self.driver.getRightY() ** 3) * self.speed

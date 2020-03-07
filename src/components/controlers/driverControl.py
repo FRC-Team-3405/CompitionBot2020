@@ -39,7 +39,7 @@ class DriverControl(GenericHID):
         return self.getRawButton(self.ButtonMap["ShiftDown"])
 
     def getSpeedUp(self) -> bool:
-        return self.getRawButtonPressed(self.ButtonMap["SpeedUp"])
+        return self.getRawButton(self.ButtonMap["SpeedUp"])
 
     def getSpeedDown(self) -> bool:
         return self.getRawButton(self.ButtonMap["SpeedDown"])
